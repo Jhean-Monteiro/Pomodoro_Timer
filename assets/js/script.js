@@ -13,12 +13,12 @@ const countDisplay = document.querySelector('.pomodoro-count span');
 
 
 
-let segundos = 25 * 60;           // tempo inicial em segundos (25min)
+let segundos = 25 * 60;           
 let timer;
 let isRunning = false;
-let isFocusTime = true;           // true = foco, false = pausa
+let isFocusTime = true;           
 let pomodoroCount = 0;
-let currentCycle = 0;             // conta até 4 para pausa longa
+let currentCycle = 0;            
 
 let TEMPO_FOCO = 25 * 60;
 let TEMPO_PAUSA_CURTA = 5 * 60;
@@ -33,21 +33,21 @@ function updateDisplay() {
 
 function nextPhase() {
     if (isFocusTime) {
-        // Acabou um foco → conta como pomodoro concluído!
-        pomodoroCount++;                    // ← MOVA PRA CÁ!
+        
+        pomodoroCount++;                   
 
         isFocusTime = false;
         currentCycle++;
         
         if (currentCycle === 4) {
             segundos = TEMPO_PAUSA_LONGA;
-            // Aqui você pode zerar o ciclo se quiser
-            currentCycle = 0;               // ← geralmente zera após pausa longa
+            
+            currentCycle = 0;               
         } else {
             segundos = TEMPO_PAUSA_CURTA;
         }
     } else {
-        // Acabou pausa → volta pro foco
+        
         isFocusTime = true;
         segundos = TEMPO_FOCO;
     }
@@ -64,8 +64,8 @@ function iniciaRelogio() {
             clearInterval(timer);
             isRunning = false;
             nextPhase();
-            // Aqui você pode adicionar um som se quiser depois
-            iniciaRelogio(); // continua automaticamente pro próximo ciclo
+            
+            iniciaRelogio(); 
             return;
         }
         segundos--;
@@ -88,7 +88,7 @@ function zerar() {
     updateDisplay();
 }
 
-// Eventos
+
 iniciarBtn.addEventListener('click', () => {
     relogio.classList.remove('pausado');
     iniciaRelogio();
@@ -101,12 +101,12 @@ pausarBtn.addEventListener('click', () => {
 
 zerarBtn.addEventListener('click', zerar);
 
-// Inicializa na tela
+
 updateDisplay();
 
 
 
-// Selecionar os botões de modo
+
 const btnModo25 = document.querySelector('.modo-25-5');
 const btnModo50 = document.querySelector('.modo-50-10');
 
@@ -134,25 +134,18 @@ if (btnModo50) {
 }
 
 function mudarModo(tempoFoco, tempoPausaCurta) {
-    // Primeiro limpa qualquer timer rodando
     clearInterval(timer);
     isRunning = false;
 
-    // Atualiza os tempos globais
     TEMPO_FOCO = tempoFoco * 60;
     TEMPO_PAUSA_CURTA = tempoPausaCurta * 60;
-    // TEMPO_PAUSA_LONGA continua 15min (ou ajuste se quiser)
 
-    // Agora configura o estado inicial do novo modo
-    segundos = TEMPO_FOCO;          // ← isso é o mais importante!
+    segundos = TEMPO_FOCO;
     isFocusTime = true;
     currentCycle = 0;
     pomodoroCount = 0;
 
-    // Atualiza visualmente tudo de uma vez
     updateDisplay();
-
-    // Atualiza a classe pausado (opcional, mas fica mais consistente)
     
     relogio.classList.add('teste')
 }
